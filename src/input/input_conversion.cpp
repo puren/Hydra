@@ -9,6 +9,8 @@
 #include "hydra/input/input_packet.h"
 #include "hydra/input/sensor.h"
 
+#include <ros/ros.h>
+
 namespace hydra::conversions {
 
 std::string showTypeInfo(const cv::Mat& mat) {
@@ -119,6 +121,7 @@ bool colorToLabels(cv::Mat& label_image, const cv::Mat& colors) {
 }
 
 bool convertLabels(InputData& data) {
+  LOG(ERROR) <<"entering label conversion";
   if (data.label_image.empty()) {
     return colorToLabels(data.label_image, data.color_image);
   }
@@ -140,8 +143,10 @@ bool convertLabels(InputData& data) {
       for (int c = 0; c < data.label_image.cols; ++c) {
         // TODO(marcus): any reason to cache image and reassign with a new one?
         const auto& pixel = data.label_image.at<int32_t>(r, c);
+        ROS_INFO("pixel: %d", pixel); // Assuming pixel is an integer. Adjust the format specifier as needed.
         data.label_image.at<int32_t>(r, c) =
             label_remapper.remapLabel(pixel).value_or(-1);
+        ROS_INFO("remap: %d", data.label_image.at<int32_t>(r, c));
       }
     }
   }
