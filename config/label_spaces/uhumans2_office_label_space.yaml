@@ -2,7 +2,7 @@
 total_semantic_labels: 21
 dynamic_labels: [20]
 invalid_labels: []
-object_labels: [5, 6, 7, 10, 12, 13, 18]
+object_labels: [5, 6, 7, 10, 12, 13, 18, 16]
 surface_places_labels: [3, 15]
 label_names:
   - {label: 0, name: unknown}
